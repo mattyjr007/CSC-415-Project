@@ -1,4 +1,5 @@
 //import 'package:animated_splash/animated_splash.dart';
+import 'package:lawyerpp/ui/register/signup.dart';
 import 'package:lawyerpp/ui/welcome_page.dart';
 import 'dart:async';
 import 'package:lawyerpp/utils/constant.dart';
@@ -19,7 +20,7 @@ class _SplashState extends State<Splash> {
     super.initState();
     navigate();
   }
-  @override
+
   void navigate(){
     Timer(
       Duration(seconds: 3),
