@@ -24,6 +24,7 @@ dependencies:
 
 
   cupertino_icons: ^0.1.2
+  dropdown_formfield: ^0.1.3
   font_awesome_flutter: ^8.8.1
   country_code_picker: ^1.6.2
   flutter_svg: ^0.17.4
