@@ -7,6 +7,8 @@ const kButtonInActive = Color(0xFFD3E0EA);
 
  const legal =  ' Get legal assistance in a second and \n keep track of your matter in real time. \n Stay safe with LAWYERPP.';
 
+
+
  const kFieldDecoration = InputDecoration(
   border:InputBorder.none,
   filled: true,

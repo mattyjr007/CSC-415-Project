@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lawyerpp/ui/register/client/panicAlert.dart';
+import 'package:lawyerpp/ui/register/client/terms_and_condition.dart';
 import 'package:lawyerpp/ui/register/forgotPassword/forgot_password.dart';
 import 'package:lawyerpp/ui/register/forgotPassword/reset_password.dart';
 import 'package:lawyerpp/ui/splash.dart';
@@ -14,7 +15,8 @@ import 'package:lawyerpp/ui/register/login.dart';
 
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
-  initialRoute: Splash.id,
+  initialRoute: TermsAndC.id,
+
   routes: {
     Splash.id: (context) => Splash(),
     WelcomePage.id : (context) => WelcomePage(),
@@ -22,8 +24,9 @@ void main() => runApp(MaterialApp(
     Path.id:(context) => Path(),
     Login.id:(context) => Login(),
     ForgotPassword.id:(context) => ForgotPassword(),
-     ResetPassword.id:(context) => ResetPassword(),
+    ResetPassword.id:(context) => ResetPassword(),
     PanicAlert.id:(context)=>PanicAlert(),
+    TermsAndC.id:(context)=>TermsAndC(),
     //'/choose_location': (context) => ChooseLocation(),
   },
 ));

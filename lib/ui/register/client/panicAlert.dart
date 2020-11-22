@@ -28,6 +28,7 @@ class _PanicAlertState extends State<PanicAlert> {
   /// A [TextEditingController] to control the input text for the user's password
   TextEditingController _relationshipController = new TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -37,7 +38,7 @@ class _PanicAlertState extends State<PanicAlert> {
         child: SingleChildScrollView(
           child: Container(
             width: SizeConfig.screenWidth,
-            height: SizeConfig.screenHeight,
+//            height: SizeConfig.screenHeight,
             child: Column(
               children: <Widget>[
                 Container(
@@ -98,6 +99,63 @@ class _PanicAlertState extends State<PanicAlert> {
                       _buildPanicAlert(),
 
                       SizedBox(height: 45,),
+
+                      //Submit button
+                      GestureDetector(
+                        onTap: (){
+
+                        },
+                        child: Container(
+                          width: SizeConfig.screenWidth,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            //inActive
+                            color: Color(0xFF1A2C56),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          child:Center(
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: Colors.white,
+                                //fontFamily: ,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 23,),
+
+                      //Skip button
+                      GestureDetector(
+                        onTap: (){
+
+                        },
+                        child: Container(
+                          width: SizeConfig.screenWidth,
+                          height: 45,
+
+                          decoration: BoxDecoration(
+                            border:Border.all(
+                              color:kButtonActive,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(4) , ),
+                          ),
+                          child:Center(
+                            child: Text(
+                              'Skip',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: kButtonActive,
+                                //fontFamily: ,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
 
                     ],
                   ),

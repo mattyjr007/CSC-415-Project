@@ -22,7 +22,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   FocusNode _fourFocus = FocusNode();
 
   /// Boolean variable to hide pin or not
-  bool _obscurePin = false;
+  bool _obscurePin = true;
 
   /// Map to hold each number for transaction pin
   Map<int, String> _pin = {
@@ -30,10 +30,36 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     4: '', 5: '', 6: '', 7: ''
   };
 
+  void initState() {
+    //_getCurrentUser();
+    super.initState();
+    _one.addListener(() {
+      if (_one.text.length > 0) {
+        _twoFocus.requestFocus();
+      }
+    });
+    _two.addListener(() {
+      if (_two.text.length > 0) {
+        _threeFocus.requestFocus();
+      }
+    });
+    _three.addListener(() {
+      if (_three.text.length > 0) {
+        _fourFocus.requestFocus();
+      }
+    });
+    _four.addListener(() {
+      if (_four.text.length > 0) {
+        FocusScope.of(context).unfocus();
+      }
+    });
+  }
+
+
 
 
   /// A string variable to hold your 4 digit transaction pin
-  String _transactionPin = '';
+  String _forgetPin = '';
 
   /// A string variable to hold user [email]
   String email = '';
