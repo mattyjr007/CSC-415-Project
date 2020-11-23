@@ -1,25 +1,29 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lawyerpp/ui/register/client/panicAlert.dart';
 import 'package:lawyerpp/utils/constant.dart';
 import 'package:lawyerpp/utils/sizeConfig.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:lawyerpp/utils/widgets.dart';
 
 class Path extends StatefulWidget {
-  static const String id = 'path';
+
+  static const String id = 'path_screen';
+
   @override
   _PathState createState() => _PathState();
 }
 
 class _PathState extends State<Path> {
+
+  /// A list of string holding the paths for the drop down
   List<String> _pathNames = [
     "Lawyer",
     "Client",
     "Law Student",
   ];
-    //int _selectedPath = 0 ;
-     String _selectedPath;
+
+  /// A string variable holding the selected path
+  String _selectedPath;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -39,67 +43,56 @@ class _PathState extends State<Path> {
                   children: <Widget>[
                     Container(
                       alignment: Alignment.topRight,
-//                      width: 15,
-//                      height: 15,
                       child: GestureDetector(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
                         child: Icon(
-                          FontAwesomeIcons.times,
-                         // size: 16,
+                          Icons.close,
                           color: Color(0xFF999999),
                         ),
                       ),
                     ),
-
                     SizedBox(height: 54,),
-
                     Container(
                       alignment: Alignment.center,
+                      width: SizeConfig.screenWidth,
                       child: Text(
                         'Which of these best describes you?',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          //fontFamily: ,
+                          fontFamily: 'Raleway',
                           fontSize:17.75 ,
                           fontWeight:FontWeight.w500 ,
-                          color: Color(0xFF1D1D1D,),
+                          color: Color(0xFF1D1D1D),
                         ),
                       ),
                     ),
-
-                    SizedBox(height: 171,),
-
+                    SizedBox(height: 171),
                     Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'I am a...',
-                                style: TextStyle(
-                                  fontSize: 14.75,
-                                  fontWeight: FontWeight.w600,
-                                  //fontFamily: ,
-                                  color: Color(0xFF1D1D1D),
-                                ),
+                          Text(
+                            'I am a...',
+                            style: TextStyle(
+                              fontSize: 14.75,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Raleway',
+                              color: Color(0xFF1D1D1D),
+                            ),
 
-                              ),
-                            ],
                           ),
                           SizedBox(height: 6,),
-
                           Container(
                             height: 45,
-                            //width: SizeConfig.screenWidth,
+                            width: SizeConfig.screenWidth,
                             child: DropdownButtonFormField(
-                              //itemHeight: ,
                               style: TextStyle(
                                 color: Color(0xFF999999),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                //fontFamily: ,
+                                fontFamily: 'Raleway',
                               ),
                               value: _selectedPath,
                               onChanged: (value){
@@ -116,16 +109,22 @@ class _PathState extends State<Path> {
                               decoration: kFieldDecoration.copyWith(
                                 hintText: 'Pick an option',
                                 hintStyle: TextStyle(
-                                  color: Color(0xFF999999),
+                                  color: Color(0xFF666666),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
+                                  fontFamily: 'Raleway',
                                 ),
                               ),
                               selectedItemBuilder: (BuildContext context){
                                 return _pathNames.map((value){
                                   return Text(
                                     value,
-                                    style: TextStyle(color: Color(0xFF1C2D55)),
+                                    style: TextStyle(
+                                      color: Color(0xFF1C2D55),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'Raleway',
+                                    ),
                                   );
                                 }).toList();
                               },
@@ -134,21 +133,19 @@ class _PathState extends State<Path> {
                                   value: value,
                                   child: Text(value,
                                     style: TextStyle(
-                                      color: Color(0xFF999999),
+                                      color: Color(0xFF666666),
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
+                                      fontFamily: 'Raleway',
                                     ),
                                   ),
                                 );
                               }).toList(),
                             ),
                           )
-
                         ],
                       ),
                     )
-
-
                   ],
                 ),
               )
@@ -156,6 +153,18 @@ class _PathState extends State<Path> {
           ),
         ),
       ),
+      floatingActionButton: _selectedPath != null
+          ? RoundIconButton(
+        onPressed: (){
+          if(_selectedPath == 'Lawyer'){
+            //Navigator.pushNamed(context, routeName)
+          }
+          else {
+            Navigator.pushNamed(context, PanicAlert.id);
+          }
+        }
+      )
+          : Container(),
     );
   }
 }

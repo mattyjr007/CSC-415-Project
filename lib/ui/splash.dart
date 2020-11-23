@@ -1,5 +1,3 @@
-//import 'package:animated_splash/animated_splash.dart';
-import 'package:lawyerpp/ui/register/signup.dart';
 import 'package:lawyerpp/ui/welcome_page.dart';
 import 'dart:async';
 import 'package:lawyerpp/utils/constant.dart';
@@ -7,20 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:lawyerpp/utils/sizeConfig.dart';
 
 class Splash extends StatefulWidget {
+
   static const String id = 'splash_screen';
+
   @override
   _SplashState createState() => _SplashState();
 }
 
 class _SplashState extends State<Splash> {
 
-  //it naivgate before the page load by calling the method.
-  @override
-  void initState(){
-    super.initState();
-    navigate();
-  }
-
+  /// Navigates to the welcome page after 3 seconds
   void navigate(){
     Timer(
       Duration(seconds: 3),
@@ -31,30 +25,23 @@ class _SplashState extends State<Splash> {
   }
 
   @override
+  void initState(){
+    super.initState();
+    navigate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor:kBackgroundColor,
-      body:Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('assets/logo.png',
-                    width: SizeConfig.screenWidth * 0.25,
-                    height: SizeConfig.screenWidth,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-            ),
-          ],
+      backgroundColor: kBackgroundColor,
+      body: Center(
+        child: Image.asset('assets/logo.png',
+          width: 106,
+          height: 97,
+          fit: BoxFit.contain,
         )
       )
-
     );
   }
 }

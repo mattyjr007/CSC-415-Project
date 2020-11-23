@@ -1,128 +1,293 @@
+import 'package:flutter/cupertino.dart';
 import'package:flutter/material.dart';
 import 'package:lawyerpp/utils/constant.dart';
 import 'package:lawyerpp/utils/sizeConfig.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 
 class TermsAndC extends StatefulWidget {
-  static const String id = 'termsCon';
+
+  static const String id = 'termsCon_screen';
+
   @override
   _TermsAndCState createState() => _TermsAndCState();
 }
 
 class _TermsAndCState extends State<TermsAndC> {
 
-  bool _privacySelected = false;
-  bool _termsSelected = false;
-  String _textChange;
-  dynamic color = kButtonInActive;
-  dynamic color2 = kButtonActive;
-
-
-  void changeColor(){
-    _privacySelected = true;
-    setState(() {
-      if (_privacySelected == true)
-      {
-        color = kButtonActive;
-        color2 = kButtonInActive;
-      }
-    });
-  }
-
-  void changeColor2(){
-    _termsSelected = true;
-    setState(() {
-      if (_privacySelected == true)
-      {
-        color = kButtonInActive;
-        color2 = kButtonActive;
-      }
-    });
-  }
+  /// A string variable holding the selected tab either terms or privacy
+  String _selectedTab = 'terms';
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return  Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: SafeArea(
-        child: Container(
-          width: SizeConfig.screenWidth,
-            height: SizeConfig.screenHeight,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: SizeConfig.screenWidth-30,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.topRight,
-//                      width: 15,
-//                      height: 15,
-                        child: GestureDetector(
-                          onTap: (){},
-                          child: Icon(
-                            FontAwesomeIcons.times,
-                            // size: 16,
-                            color: Color(0xFF999999),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 45,),
-                      //Divider(height: 20, color: Colors.black,),
-           
-                      // terms and condition button wrapped in a container
-                      Container(
-                        width: SizeConfig.screenWidth,
-                        child: IntrinsicHeight(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              GestureDetector(
-                                onTap:(){changeColor2();},
-                                child: Text(
-                                  "Terms of Use",
-                                  style: TextStyle(
-                                    //fontFamily: ,
-                                    color: color2,
-                                    fontSize: 17.75,
-                                    fontWeight:FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                              VerticalDivider(
-                                width: 20,
-                                thickness: 1,
-                                color: Colors.black,
-                              ),
-
-                              GestureDetector(
-                                onTap:(){changeColor();},
-                                child: Text(
-                                  "Privacy Policy",
-                                  style: TextStyle(
-                                    //fontFamily: ,
-                                    color: color,
-                                    fontSize: 17.75,
-                                    fontWeight:FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: Container(
+          padding: EdgeInsets.only(left: 15, right: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Color(0xFF999999),
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+              SizedBox(height: 45),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          _selectedTab = 'terms';
+                        });
+                      },
+                      child: Text(
+                        'Terms of Use',
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          color: _selectedTab == 'terms'
+                              ? Color(0xFF1C2D55)
+                              : Color(0xFF999999),
+                          fontSize: 17.75,
+                          fontWeight:FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 9),
+                    Container(
+                      width: 1,
+                      height: 20,
+                      color: Color(0xFF696868),
+                    ),
+                    SizedBox(width: 11),
+                    GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          _selectedTab = 'privacy';
+                        });
+                      },
+                      child: Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          color: _selectedTab == 'privacy'
+                              ? Color(0xFF1C2D55)
+                              : Color(0xFF999999),
+                          fontSize: 17.75,
+                          fontWeight:FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 18),
+              Expanded(
+                child: Scrollbar(
+                  thickness: 4,
+                  child: SingleChildScrollView(
+                    child: _selectedTab == 'terms'
+                        ? _buildTerms()
+                        : _buildPrivacy(),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
+
+  Widget _buildTerms(){
+    return Container(
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          text: 'This page states the terms and conditions (“',
+          style: TextStyle(
+              fontFamily: 'Raleway',
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              color: Color(0xFF1D1D1D)
+          ),
+          children: <TextSpan>[
+            TextSpan(
+                text: 'Terms of Use',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Color(0xFF000000)
+                )
+            ),
+            TextSpan(
+                text: '” or “',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: 'Terms',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Color(0xFF000000)
+                )
+            ),
+            TextSpan(
+                text: '”) under which you may use the LAWYERPP web app available at www.lawyerpp.com or mobile apps available for download on the Google Play Store and the Apple App Store (collectively referred to as the "',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: 'Solution',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Color(0xFF000000)
+                )
+            ),
+            TextSpan(
+                text: '”). Please read these Terms carefully as they govern your access to and use of the Solution, and apply to all services and sub-sites available under the domain name www.lawyerpp.com and mobile apps, as well as all texts, audios, videos, images, graphics, materials, online communications and other information and content that are or become available on the Solution (collectively, the "',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: 'Information',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Color(0xFF000000)
+                )
+            ),
+            TextSpan(
+                text: '”). By using the Solution, you (“',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: 'you',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Color(0xFF000000)
+                )
+            ),
+            TextSpan(
+                text: '” or “',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: 'User',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF000000)
+                )
+            ),
+            TextSpan(
+                text: '”) signify your acceptance of these Terms and your acknowledgement that the information that you provide, directly or indirectly, through the Solution will be managed in accordance with the LAWYERPP Privacy Policy. As such, if you do not accept the Terms stated here, do not use the Solution.\n\n',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: 'The Solution contains certain services and related features that may require registration or subscription. If you open and operate an account on the Solution, you shall ensure that you are lawfully authorised to provide all information submitted by you and all such information is true and accurate. You are responsible for updating all information supplied once there is any change. LAWYERPP reserves the right to suspend or terminate your access to any account created by you or any restricted portion of the Solution should it discover that any information provided by you is no longer true or accurate. You are entirely responsible for all activities that occur under such account and you are solely responsible for keeping details of such password and account safe and secure. If you detect or become aware of any unauthorised activity or use of your account or password on the Solution, you shall immediately notify LAWYERPP of same to enable LAWYERPP immediately disable access to your account. LAWYERPP shall not be responsible or liable, directly or indirectly, in any way for any loss or damage of any kind incurred as a result of, or in connection with, use of your account on the Solution or failure to comply with these Terms of Use. General The services that LAWYERPP provides to users are subject to these Terms of Use. LAWYERPP reserves the right to update the Terms of Use at any time without notice to the User. The most current version of the Terms of Use can be reviewed by clicking on the Terms of Use links on the web and mobile apps. LAWYERPP facilitates easy access to competent, fit for purpose and affordable legal services, defined emergency services (via the panic button) as well as consulting services relevant to the legal services industry (collectively referred to as the “Services”) on a digital platform. 1. Interpretation and Definitions For the purposes of these Terms, the following words shall have the meaning provided below: ‘Affiliate’ means LAWYERPP LegalTech Limited and any other entity that, directly or indirectly, through one or more intermediaries, controls, is controlled by, or is under common control with, LAWYERPP LegalTech Limited. ‘LAWYERPP’ or ‘LAWYERPP Solution’ or ‘Solution’ shall mean all that proprietary information contained, prepared, presented and hosted by LAWYERPP at www.lawyerpp.com, on its mobile application and/or any other website so owned by LAWYERPP for the purposes of facilitating access to the Services. ‘LAWYERPP LegalTech Limited’ means the body corporate with rights and ownership to the Solution and all such services as are provided on the LAWYERPP web and mobile applications, which expression shall include its successors in title and assigns. ‘Officers’ shall where the context so admits mean officers, employees, directors and agents of the organisation, company or firm being referred to. ‘Participating Attorneys’ means any and all registered lawyers and/or law firms on the Solution ‘Terms’ means the Terms of Use contained herein. ‘Third Party’ means any individual, firm, or organisation designated by LAWYERPP or with whom LAWYERPP contracts as a partner, agent and such other relationships for the purpose of providing or distributing LAWYERPP’s services to the User. ‘User’ shall mean any and all visitors, and all registered accountholders on the LAWYERPP Solution. 2. Contractual Relationship (1) These Terms govern your access to and use of LAWYERPP operated by LAWYERPP LegalTech Limited. (2) By continuing usage of LAWYERPP, you consent to be bound by these Terms for use of and access to LAWYERPP. (3) The User is required to keep these terms and conditions as they constitute a binding agreement between the User and LAWYERPP. 3. User’s Capacity and Related Matters By accepting these Terms and/or the continued use of LAWYERPP, the User represents and warrants: (1) To have attained the legal age of majority in the User’s country of residence or otherwise able to form a binding contract with LAWYERPP in order to use the Services. (2) All information provided by the User on and for the purposes of LAWYERPP are always true, complete, accurate, neither fraudulent nor misleading in any respect. (3) User further represents and warrants to have the legal authority to accept the Terms herein set out and such acceptance will be binding on the User. (4) LAWYERPP reserves the right in its sole discretion, to refuse to provide the Services to the User in any event that the User is in breach of any provisions of these Terms. 4. Acceptance of Terms of Use and Privacy Policy (1) For the avoidance of doubt, use of LAWYERPP and/or any of its Services constitutes acceptance of these Terms and the LAWYERPP Privacy Policy, and any subsequent amendments which may be made to the LAWYERPP Terms of Use and Privacy Policy from time to time. (2) The User agrees and confirms that (s)he will not use LAWYERPP in violation of any law in force in the Federal Republic of Nigeria, or in force in the User’s jurisdiction, or such other law which may occasion liability of any sort on LAWYERPP. 5. Trial Offers, Auto-Renewals and Paid Accounts (1) LAWYERPP may, at its sole discretion, make available trial offers for the limited use of LAWYERPP to new or existing Users who provide a valid payment instrument, such as a debit card or other electronic payment method. (2) Any use of additional Services beyond those included in the trial offer, will require a separate purchase of those Services or an upgrade to a paid membership prior to the end of the trial offer period. (3) LAWYERPP reserves the right to automatically charge the User at the end of the trial or for a membership renewal unless the User gives notice of intention to cancel or convert such membership. (4) To enable User conveniently to purchase additional products and services, LAWYERPP will store and update (e.g. upon expiration) User payment information. (5) If LAWYERPP is unable to charge the User’s designated payment method for any reason, LAWYERPP reserves the right to automatically suspend the User’s paid membership until the designated payment method can be charged again. (6) For the avoidance of doubt, it is the User’s responsibility to maintain current billing information with LAWYERPP. 6. Payment Obligations (1) LAWYERPP reserves the right to require subscription from the User to enable the User have access to certain services on the Solution. (2) LAWYERPP reserves the right to deduct a 3% (three percent) processing fee from all payments, other than subscriptions and independently billed services provided by LAWYERPP on the Solution, made via its payment platform. (3) Upon initiation and confirmation of a transaction on LAWYERPP, the User agrees to be bound by and pay for any such transaction. User is enjoined not to commit to a transaction unless able and ready to pay for same. (4) User warrants that all payment information provided is accurate, not misleading and not fraudulent in any respect. (5) All payment transactions for LAWYERPP are final and non-refundable. (6) To prevent financial loss or possible violations of the law, LAWYERPP reserves the right to, in its discretion, disclose details of any payment associated with or made by the User to law enforcement agencies or impacted third parties (including other users). Such disclosures may originate from an order of any court of competent jurisdiction to compel such disclosure. (7) SMS charges or any such other charges (where applicable) by communication network operators may be applied for each payment transaction conducted on the Solution. 7. Refund Policy (1) LAWYERPP desires the optimum satisfaction of the User regarding services provided on the Solution. (2) In the event that the User believes there has been an error in billing, User should contact LAWYERPP by email at complaints@lawyerpp.com immediately so that such issue may be resolved, by providing a refund or offering credit that can be used for future Services. (3) The relevant mode of refund for complaints made will be determined at the sole discretion of LAWYERPP, and the User shall under no circumstances be entitled to any claim arising from or in connection with the refund method chosen by LAWYERPP. (4) When communicating such complaint, User should include any and all details relating to the exact LAWYERPP service paid for. Refund requests must be made within 14 (fourteen) days of purchase, provided that, if specific services require different refund request periods, the User shall comply with such refund period. 8. Confidentiality (1) In line with applicable data protection regulations, LAWYERPP is bound by stringent professional standards of confidentiality. Any information received by LAWYERPP from Users is held in strict confidence and is not released to any third party, unless agreed to by you, or as required under applicable law. (2) All our records are securely retained in electronic files, along with secure backups. 9. Use of Model Forms and Agreements (1) Information/service provided on the Model Forms and Agreements does not constitute Legal Advice (as defined below). As such, your use of information/service contained in the Model Forms and Agreements does not create a lawyer-client relationship. (2) No legal information provided in the Model Forms and Agreement is a substitute for legal advice from a qualified legal practitioner including lawyers on the Solution. (3) You agree that all decisions and information you make while creating a document are your full responsibility and you agree to retain appropriate legal counsel from a qualified legal practitioner including lawyers on the Solution.. (4) LAWYERPP does not: (a) review any response provided by a User that generates a document on the Model Forms and Agreements for legal accuracy or sufficiency; (b) draw legal conclusions or provide opinions about your selection of documents; apply the law to the facts of the presented situation; (c) advise on which legal document or documents you need or are best for your situation; (d) determine the legal consequences that will or could result from how you have created your legal document. (5) For the purposes of these Terms, Legal Advice is defined to include any legal related communication, work or service which, under any applicable law, is only allowed to be performed by or under the supervision of a qualified legal practitioner. (6) When you purchase an agreement or any other document from the Model Forms and Agreements, you are purchasing a perpetual non-transferable, non-assignable license to use the form for your use only. You may not sell, transfer, assign or otherwise give the form or document you have purchased from us to another person for that person’s separate use. These restrictions do NOT preclude you from having another person sign or accept a document if you are a party to that transaction. You may not allow another person to have or use any form or other document, or paper or electronic copies thereof, that you have purchased from us through this website in any manner inconsistent with the license described in this provision. (7) If in doubt as to the appropriate forms or agreements to use, kindly seek legal counsel. 10. Interface with Lawyers and Law Firms on the Solution (1) An attorney-client relationship is created or exists between a User (who opens a client or law student account) and lawyers or law firms on the Solution, to the exclusion of LAWYERPP, when a User retains the services of these lawyers or firms using any of the available features on the Solution. (2) LAWYERPP does not endorse or recommend any lawyer or law firm nor does it make any warranty as to the qualifications or competency of any lawyer or law firm. (3) The lawyers and law firms registered on the Solution are third-party independent contractors solely responsible for the advice they give, the services they provide and the representations they make about themselves. As such, Users are solely responsible for assessing the quality, integrity, suitability and trustworthiness of all persons with whom they communicate legal needs on the Solution. (4) Where a User has cause to complain about the unprofessionalism of any lawyer or law firm on the Solution, the User may send a complaint to complaints@lawyerpp.com as well as inform the necessary disciplinary bodies for lawyers in that lawyer’s or law firm’s jurisdiction. 11. Panic Button (1) The panic button has been provided on the Solution to assist Users in cases of emergency but does not purport to replace any publicly available emergency response services. (2) LAWYERPP shall immediately send out panic alerts on the prompting of the User, using the in-app panic button or the panic button widget, to the User’s registered Next of Kin and lawyers within close proximity to the User. (3) Although Panic Alerts shall be sent within moments of the User’s prompting, LAWYERPP does not guaranty the responses or timeframe of responses of Next of Kin and lawyers who receive panic alerts. (4) User agrees that LAWYERPP’s sole responsibility with regard to panic alerts is to ensure that they are sent out to the intended recipients and no more, and LAWYERPP shall not be responsible for delivery delays or failures occasioned by services of the recipients’ telecommunication or internet service providers. (5) LAWYERPP reserves the right to temporarily or permanently suspend from the use of the panic button services Users found to have sent out hoax panic alerts. 12. Termination of Subscription, Membership and Access Restriction (1) LAWYERPP reserves the right, in its sole discretion, to downgrade or terminate your access to the Solution, for any reason and at any time without prior notice. (2) If LAWYERPP elects to terminate your account, LAWYERPP will send notice of same to your registered email address. (3) LAWYERPP reserves the right to modify or discontinue, either temporarily or permanently, any part of the Services with or without notice to the User. (4) The User agrees that LAWYERPP will not be liable to the User or any third party claiming through the User for any modification, suspension, or discontinuance of the User’s subscription or membership or access on the Solution. 13. Ownership and Preservation of Documents (1) LAWYERPP does not claim ownership of any documents, files or media (collectively referred to in this section as “Documents”) you create, upload or store on the Solution. (2) You hereby grant LAWYERPP permission to use your Documents in connection with providing services to you. (3) The User acknowledges and agrees that LAWYERPP may preserve these Documents as well as disclose them if required to do so by law or in the good faith belief that such preservation or disclosure is reasonably necessary to accomplish any of the following: (a) To comply with legal process, any applicable law or government requests; (b) To enforce the provisions of these Terms; (c) To respond to claims that any content violates the rights of third parties; or (d) To protect the rights, property, or personal safety of LAWYERPP, its users and the public. (4) The User understands that the technical processing and transmission of LAWYERPP, including User’s content, may involve transmissions over various networks and changes to conform and adapt to technical requirements of connecting networks or devices. As such, User agrees that LAWYERPP has no responsibility or liability for deleting or failing to store any content maintained or uploaded for use on LAWYERPP. 14. Consent to Receive Emails (1) By creating an account, the User agrees that (s)he may receive email communications from LAWYERPP, such as notifications, newsletters, special offers, account reminders and updates. (2) Where the option exists, the User may discontinue receipt of these communications by clicking the ‘Unsubscribe’ link in the footer of the actual email. 15. Acceptable use of Communication Services/Chatrooms (1) The services provided by LAWYERPP include a large number of what are referred to in this section as Communication Services which include but are not limited to live chats, comment threads, question and answer products, customer service communication forums, and other message services. (2) The User agrees to use the Communication Services only to post, send and receive messages or materials proper to and related to the particular Communication Services. (3) The User agrees that when using the Communication Services, the User will not: (a) Defame, abuse, harass, stalk, threaten or otherwise violate the legal rights of any other User. (b) Publish, post, upload, distribute or disseminate any names, materials, or information that is considered inappropriate, profane, defamatory, infringing, obscene, indecent, or unlawful. (c) Create a false identity, represent self as someone else or otherwise falsify or delete in an uploaded file any significant attributions or notices. (d) Upload files that contain software or other material protected either by intellectual property laws or by the rights of privacy or publicity except when the necessary rights or consent to such material or software is owned or controlled or obtained (as applicable) by the User. (e) Upload corrupted files, files that contain viruses, or any other files that may damage the operation of another’s computer or mobile device. (f) Advertise, offer to sell, or offer to buy anything for business purposes except to the limited extent any particular Communication Service specifically allows such activity. (g) Restrict or inhibit any other user from using and enjoying the Communication Services unless allowed by such Communication Service. (h) Harvest or otherwise collect personally identifiable information about others, without their consent. (i) Violate any code of conduct or other guidelines, which may be applicable for any particular Communication Services. (j) Violate any applicable laws or regulations. (4) Although LAWYERPP has no obligation to monitor the Communication Services, LAWYERPP reserves the right, in its own discretion, to review and remove materials posted to a Communication Service, in whole or in part. (5) LAWYERPP reserves the right to disclose any material posted, information or activity as necessary to satisfy any applicable law, regulation, legal process, or governmental request. 16. No Unlawful or Prohibited Use (1) User can only make use of the Services if the Services do not conflict with or violate the laws of User’s jurisdiction. (2) The availability of the Services in User’s jurisdiction is not an invitation or offer by LAWYERPP to access or use the Solution and the Services. (3) By using the Solution, the User accepts sole responsibility that such use does not violate any applicable law in User’s jurisdiction. 17. Licence Grant (1) Subject to the User’s compliance with these Terms, the User is hereby granted a non-exclusive, limited, non-transferable, revocable licence to access the Solution as in accordance with the intention of LAWYERPP. (2) Any and all rights not expressly granted in these Terms are reserved by LAWYERPP. (3) Upon transmission of content on LAWYERPP, User hereby grants LAWYERPP and its affiliates a non-exclusive, royalty-free, perpetual, revocable and fully sub-licensable right to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform and display any such content. (4) Any feedback and/or suggestions submitted by the User, may be used by LAWYERPP without obligation to the User. (5) Any resale or unauthorised distribution or duplication of materials downloaded from LAWYERPP is strictly prohibited. Use of any such materials is for personal use only. Any resale or redistribution of LAWYERPP resources without express written consent by LAWYERPP is strictly prohibited. 18. Intellectual Property Rights (1) LAWYERPP retains all rights, titles and interests in and to the products and services provided by it on the Solution including without limitation: software, images, text, graphics, illustrations, logos, service marks, copyrights, photographs, videos, music, and all related intellectual property rights. Except as otherwise provided in this Terms, the User shall not and shall not permit others to: (a) Reproduce, modify, translate, enhance, decompile, disassemble, reverse engineer or create derivative works of any of the Services; (b) Sell, license, sublicense, rent, lease, distribute, copy, publicly display, publish, adapt or edit any of the Services; or (c) Circumvent, or disable any security or technological features of the Services. (2) The design, text, graphics and selection and arrangement thereof, and services and the legal documents, guidance and all other content found on the LAWYERPP website and all other content found on the website are copyrights of LAWYERPP©, and all rights are reserved. (3) LAWYERPP® is a registered trademark in the Nigerian Registry of Trademarks, Patents, and Designs. (4) User shall not copy, imitate or use the LAWYERPP trademark or any material or information, the copyright of which is owned by LAWYERPP, in whole or in part, without prior consent of LAWYERPP. (5) In addition, the look and feel of LAWYERPP is the service mark, trademark and/or trade identity of LAWYERPP and the User may not copy, imitate or use same without prior written consent of LAWYERPP. (6) The names of actual organisations and products which the User may encounter through LAWYERPP may be the trademarks of its respective owners. (7) Nothing in this Terms shall be understood as in any way granting any licence or right to use any of LAWYERPP’s trademarks displayed on the LAWYERPP website. (8) All goodwill generated from the use of LAWYERPP’s trademarks is reserved for the use of LAWYERPP, exclusively. 19. Copyright Infringement (1) If the User believes that any material on the Solution infringes upon any copyright owned and/or controlled by the User, the User may send a notice of alleged infringement to complaints@www.lawyerpp.com. 20. Links to Third Party Solutions (1) The Solution may contain links to third party resources and businesses on the internet (referred to in this section as ‘Links’). (2) These Links are provided for User convenience to help the User identify and locate other internet resources that may be of interest to the User. LAWYERPP does not sponsor and is not legally associated with any third-party Links. (3) LAWYERPP is not legally authorised to use any trade name, registered trademark, logo, official seal or copyrighted material that may appear in the Links. (4) LAWYERPP does not control, endorse or monitor the content(s) of any Links, and any changes or updates to any such Link. (5) LAWYERPP is not responsible for webcasting or for any other form of transmission received from any Link. (6) This Terms do not cover User interaction with Links. (7) User has the sole responsibility to carefully review the terms and conditions and privacy policies of any Links and Linked sites, and any third-party sites connected thereto. (8) In respect of the use of any service provided by any Link or on any Linked site: (a) LAWYERPP is not and will not be responsible for any act or omission of the third party, including any third-party access to or use of User data; (b) LAWYERPP does not warrant or support any service provided by the Third Party. 21. Disclaimer of Responsibility and Liability (1) TO THE FULLEST EXTENT PERMITTED BY LAW, LAWYERPP MAKES NO WARRANTIES, EITHER EXPRESS OR IMPLIED, ABOUT THE SERVICES AS THEY ARE PROVIDED ‘AS IS’. (2) LAWYERPP ALSO DISCLAIMS ANY WARRANTIES OR MERCHANTIBILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. INFORMATION AND OPINIONS RECEIVED VIA THE SOLUTION SHOULD BE RELIED UPON FOR PERSONAL OR LEGAL DECISIONS ONLY UPON CONSULTATION WITH EITHER A LAWYER ON THE SOLUTION OR ANY OTHER LAWYER QUALIFIED TO PRACTICE LAW IN THE JURISDICTION OF INTEREST TO THE USER FOR SPECIFIC ADVICE TAILORED TO THE USER’S SITUATION. (3) IN NO EVENT WILL LAWYERPP AND/OR ITS AFFILIATES BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, PUNITIVE, EXEMPLARY OR CONSEQUENTIAL DAMAGES OR ANY LOSS OF USE, DATA, BUSINESS, OR PROFITS, REGARDLESS OF LEGAL THEORY, WHETHER OR NOT LAWYERPP HAS BEEN WARNED OF THE POSSIBILITY OF SUCH DAMAGES, AND EVEN IF A REMEDY FAILS OF ITS ESSENTIAL PURPOSE. 22. Release and Indemnity (1) The User personally and on behalf of the User’s heirs, executors, agents, representatives, and assigns, fully releases, forever discharges, and holds LAWYERPP, and/or its affiliates and their respective officers and/or representatives harmless against any and all losses, damages, expenses, including reasonable attorney’s fees, rights, claims, and actions of any kind and injury (including death) arising out of or relating to the use of the Services. (2) User agrees that this release has been freely and voluntarily consented to and confirms that (s)he fully understands the purpose, intent, form and import of this Terms. (3) The User agrees to indemnify LAWYERPP and/or its affiliates and their respective officers and/or representatives against any and all losses, damages, expenses, including reasonable attorneys’ fees, rights, claims, actions of any kind and injury (including death) arising out of any third party claims relating to use of the LAWYERPP Services by the User, violation by the User of the Terms, and/or violation by the User of the rights of another in relation to the Terms. 23. Dispute Resolution (1) User concerns can be resolved quickly and to the User’s satisfaction by calling any publicly LAWYERPP customer service numbers and/or by sending an email to complaints@www.lawyerpp.com. (2) In the event that LAWYERPP is not able to resolve a dispute with the User after attempts to do so informally, then as a condition to use of the Services, the User agrees with LAWYERPP that such disputes, claims, rights arising therefrom shall be resolved through binding arbitration before a sole arbitrator. (3) The Arbitration and Conciliation Act, Cap A18 Laws of the Federal Republic of Nigeria shall be the applicable law for such proceedings. (4) The arbitration proceedings shall be held in Lagos, Nigeria. (5) Any party seeking arbitration must first send to the other, by certified or registered mail a written notice of dispute. (6) Any notice to LAWYERPP should be addressed to: LAWYERPP LegalTech Limited 55, Gbangbala Street, Lekki Phase 1, Lagos, Nigeria Attention: Company Secretary/Head of Legal (7) Any notice to be sent by LAWYERPP to the User shall be sent to the User’s address set forth in LAWYERPP’s records of account or such other legal address as LAWYERPP is able to identify and/or via the User’s registered email address. (8) The User may only resolve disputes with LAWYERPP on an individual basis, and may not bring a claim as claimant or plaintiff or a class member in a class, consolidated or representative action. Class arbitrations, class actions, private attorney general actions, and consolidations with other arbitrations are not allowed. (9) Notwithstanding this agreement to arbitrate disputes (as provided above), the following exceptions will apply to the resolution of disputes between LAWYERPP and Users: (a) LAWYERPP may bring a lawsuit against the User in any court of competent jurisdiction for injunctive relief to stop any unauthorised use or abuse of the Services without first engaging in arbitration or the informal dispute resolution process described above. (b) LAWYERPP may bring a lawsuit against the User in any court of competent jurisdiction solely for injunctive relief to stop any intellectual property infringement without first engaging in arbitration or the informal dispute resolution process described above. (c) In the event that the agreement to arbitrate, as provided herein, is found to be inapplicable or unenforceable for any reason, then as a condition to the use of the LAWYERPP Services, LAWYERPP and the User expressly agree that any resulting judicial proceedings will be brought in any court of competent jurisdiction, and by use, the User expressly consents to the venue and jurisdiction of the courts therein. 24. Applicable Law This Terms shall be governed by the Laws of the Federal Republic of Nigeria . 25. Entire Agreement (1) This Terms constitutes the entire agreement between the User and LAWYERPP with respect to its subject matter and supersedes and replaces any other prior or contemporaneous agreements, or terms and conditions applicable to the subject matter of this Terms. (2) This Terms shall in no way be construed as creating third party beneficiary rights. 26. Waiver, Severability and Assignment (1) The failure of LAWYERPP to enforce any provision in this Terms is not and shall not be construed as a waiver of its right to do so later. (2) In the event that any provision of this Terms is found unenforceable, the remaining provisions of the Terms will remain in full effect and be enforceable, and such term which reflects the intent of LAWYERPP as nearly as possible shall be reflected in the agreement instead of any severed term. (3) The User may not assign any rights under this Terms, and any such attempt to do so shall be void and of not effect. Provided that LAWYERPP shall reserve the right to assign its rights to any of its affiliates or subsidiaries, or to any successor in interest of any business associated with the Services.',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrivacy(){
+    return Container(
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          text: 'LAWYERPP facilitates easy access to competent, fit for purpose and affordable legal services, defined emergency services (via the panic button) as well as consulting services relevant to the legal services industry (collectively referred to as the “Services”) on a digital platform.\n\n',
+          style: TextStyle(
+              fontFamily: 'Raleway',
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              color: Color(0xFF1D1D1D)
+          ),
+          children: <TextSpan>[
+            TextSpan(
+                text: 'Your privacy matters to LAWYERPP (hereinafter referred to as “LAWYERPP”, “we”, “our” or “us”). This Privacy Policy explains how we collect, use, share and protect information about you. It also explains how you can access and update your information and make certain choices about how your information is used.\n\n',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: ' The Privacy Policy covers both “online” (e.g. web and mobile services, including any websites operated by us, however accessed and/or used, whether via personal computers, mobile devices or otherwise) and “offline” (e.g. collection of data through mailings or telephone) activities owned, operated, provided, or made available by LAWYERPP.\n\n"',
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+            TextSpan(
+                text: "This Privacy Policy also applies to your use of interactive features or downloads that we own or control, or are available through the Services. BY ACCEPTING THE LAWYERPP TERMS OF USE, YOU AGREE TO THE TERMS OF THIS PRIVACY POLICY. If you do not agree to this Privacy Policy, do not accept the LAWYERPP Terms of Use or use our Services. This Privacy Policy is incorporated by reference into the LAWYERPP Terms of Use. If you have questions about this Privacy Policy, please contact us through the info@lawyerpp.com. 1. COLLECTION OF INFORMATION (1) Information you provide to us We collect information you provide directly to us, such as when you create or modify your account, request for certain services, contact customer support, or otherwise communicate with us. This information may include: name, email, phone number, postal address, profile picture, payment method and other information you choose to provide. (2) Information we collect through the use of the Services We and any of our third party service providers may use a variety of technologies that automatically (or passively) collect certain information whenever you visit or interact with the Services (“Usage Information”). This Usage Information may include the browser that you are using, the URL that referred you to our Services, all of the areas within our Services that you visit, and the time of day, among other information. In addition, we collect your device identifier (i.e. Internet Protocol (“IP”) address or other unique identifier) for your computer, mobile or other device used to access the Services. Usage Information may be collected using a cookie. If you do not want information to be collected through the use of cookies, your browser allows you to deny or accept the use of cookies. Cookies can be disabled or controlled by setting a preference within your web browser or on your device. If you choose to disable cookies or flash cookies on your device, some features of the Services may not function properly or we may not be able to customise the delivery of information to you. LAWYERPP cannot control the use of cookies (or the resulting information) by third parties, and use of third party cookies is not covered by our Privacy Policy. (3) Information collected by LAWYERPP We may collect and use technical data and related information, including but not limited to, technical information about your device, system and application software, and peripherals, that are gathered periodically to facilitate the provision of software updates, product support and other services to you (if any) related to such mobile applications. LAWYERPP may automatically collect and store, including without limitation, the following information from your device: (a) Your preferred language and country site (if applicable); (b) The manufacturer and model of your device; (c) Your device and operating system; (d) The type of internet browsers you are using; (e) Your geolocation; (f) Transaction details related to your access to the Services, including the type of service requested, date and time the service was provided, amount charged, and other related transaction details, and if someone uses your promo code, we may associate your name with that person; (g) Information about how you interact with LAWYERPP such as how many times you use a specific part of the Services over a given time period, how often you use any of the Services and how you generally engage with LAWYERPP; and (h) Information to allow us to personalise the services and content available through LAWYERPP. (4) Information Collected from Third Parties We may, from time to time, supplement the information we collect about you through LAWYERPP or the Services with external records from third parties. For instance: (a) If you choose to link, create, or log into your LAWYERPP account with a payment provider or social media service, or if you engage with a separate app or website that uses our application programming interface (“API”) or whose API we use, we may receive information about you or your connections from that site or app; (b) If you also interact with our Services in another capacity, for instance as a user of other apps we provide, we may combine or associate that information with information we have collected from you in your capacity as a User. (5) Use of Information Collected Our primary goal in collecting your information is to provide you with an enhanced experience when using the Services. When you join us, you provide us with your contact information and email address. We use this information to send you notifications resulting from your use of the Services, questionnaires to measure your satisfaction with our service, and announcements about new and exciting services that we offer. When your use of our services involves payment, we ask for your credit or debit card details. We use this information only to bill you for the services requested for at that time. For your convenience, we may save billing information in case you want to subscribe or make payment on our platform again, but we do not use this information again without your permission. We occasionally hire other organisations to provide limited services on our behalf, including but not limited to managing the LAWYERPP Career Centre, the LAWYERPP Business Development Centre, the Sexual Harassment Helpdesk, sending postal mail, and other related services. We will only provide those organisations information they need to deliver those specific services, and they are prohibited from using such information for any other purpose. LAWYERPP will disclose your personal information, without notice, only if required to do so by law or in good faith, believing that such action is necessary to:  Conform to the edicts of the law or comply with legal process served on us;  Protect and defend the rights or property of LAWYERPP and its family of solutions; and  Act in the circumstances to protect the personal safety of other users of LAWYERPP, its applications or the public. We may use your information to carry out the following: (a) Closely monitor which features of the Services are used most, to allow you to view your account history, rate services, and to determine which features we need to focus on improving, including usage patterns and geographic locations to determine where we should offer or focus services, features and/or resources. (b) Prevent, discover and investigate violations of this Privacy Policy or the Terms of Use, and to investigate fraud, chargeback or other matters; (c) Provide some of your information such as your name, description of the legal matter and contact information to a lawyer or law firm handling a matter on your behalf. (d) Provide you with information or services or process transactions that you have requested or agreed to receive as well as to send you electronic newsletters, or to provide you with special offers or promotional materials on behalf of us or third parties. (e) Contact you with regard to your use of the Services and, in our discretion, changes to the Services and/or the Services’ policies. (f) For internal business purposes, inclusion in our data analytics and for purposes disclosed at the time you provide your information or as otherwise set forth in this Privacy Policy. (g) LAWYERPP may use the information collected from you for targeted advertising. This involves using information collected on an individual's web or mobile browsing behavior such as the pages they have visited or the searches they have made. This information is then used to select which advertisements should be displayed to a particular individual on websites other than our website. The information collected is only linked to an anonymous cookie ID (alphanumeric number); it does not include any information that could be linked back to a particular person, such as their name, address or credit card number. (h) LAWYERPP uses the information collected from the website to provide the correct app version depending on your device type, for troubleshooting and in some cases, marketing purposes. (i) We use your IP address to help diagnose problems with our computer server, and to administer our website. (j) We will send you strictly service-related announcements on rare occasions when it is necessary to do so. For instance, if our Services are temporarily suspended for maintenance, we might send you an email. If you do not wish to receive them, you may be provided with an option of opting out of email notifications. 2. CONDITIONS FOR DISCLOSING INFORMATION TO THIRD PARTIES We do not sell, share, rent or trade the information we have collected about you, other than as disclosed within this Privacy Policy or at the time you provide your information. The following are the situations when information may be shared: (a) When you agree to receive Information from Third Parties You may be presented with an opportunity to receive information and/or marketing offers directly from third parties. If you do agree to have your information shared, your information will be disclosed to such third parties and all information you disclose will be subject to the privacy policies and practices of such third parties. We are not responsible for the privacy policies and practices of such third parties and, therefore, you should review their privacy policies and practices prior to agreeing to receive such information from them. If you later decide that you no longer want to receive communication from a third party, you will need to contact that third party directly. (b) Third Parties providing Services on our behalf We may use third party organisations and individuals to facilitate access to, and usage of the Services, to enable us send you special offers, perform technical services (e.g., without limitation, maintenance services, database management, web analytics and improvement of the Services), or perform other administrative services. These third parties will have access to User Information in order to carry out the services they are performing for you or for us. Each of these third parties are required to ensure the same level of data protection as us and are obligated not to disclose or use your information they receive from us for any other purpose. (c) Administrative and Legal Reasons LAWYERPP cooperates with government, law enforcement officials, and private parties to enforce and comply with the law. Thus, we may access, use, preserve, transfer and disclose your information to government, law enforcement officials or private parties as we reasonably determine is necessary and appropriate: (i) to satisfy any applicable law, regulation, subpoenas, governmental requests or legal process; (ii) to protect and/or defend the Terms for the Services or other policies applicable to any of the Services, including investigation of potential violations thereof; (iii) to protect the safety, rights, property or security of LAWYERPP, the Services or any third party; (iv) to protect the safety of the public for any reason; (v) to detect, prevent or otherwise address fraud, security or technical issues; and /or (vi) to prevent or stop activity we may consider to be, or to pose a risk of being, an illegal, unethical or legally actionable activity. (d) When you share Information Information may be collected and shared with third-parties if there is content from LAWYERPP that you specifically and knowingly upload, share with or transmit to an email recipient, website, or to the public, e.g. uploaded media, posted reviews or comments, or information about you or services rendered that you choose to share with others through features which may be provided on our Services. This uploaded, shared or transmitted content will also be subject to the privacy policy of the email, online community website, social media or other platform to which you upload, share or transmit the content. (e) Business Transfer We may share your information with our subsidiaries and affiliates for internal reasons. We also reserve the right to disclose and transfer all such information: (i) to a subsequent owner, co-owner or operator of the Services or applicable database; or (ii) in connection with a corporate merger, consolidation, restructuring, the sale of substantially all of our membership interests and/or assets, or other corporate change, including during the course of any due diligence process. 3. CHANGE OF INFORMATION AND CANCELLATION OF ACCOUNT You are responsible for maintaining the accuracy of the information you submit to us, such as your contact information provided as part of your account registration. If any information changes, or if you no longer desire access to the Services, you may correct, delete inaccuracies, or amend such information by making the change on your account information page within our app or by contacting us through complaints@lawyerpp.com. We will make good faith efforts to make requested changes in our active databases as soon as reasonably practicable. You may also cancel or modify your communications that you have elected to receive by following the instructions contained within an email or by logging into your user account and changing your communication preferences, where the option exists. If upon modifying or changing the information earlier provided, we find it difficult to permit your access to the Services due to insufficiency/ inaccuracy of the information, we may, in our sole discretion terminate your access to the Services by providing you a written notice to this effect via your registered email address. Kindly contact us if you wish to cancel your account or request that we no longer use your information to provide you Services. Even after your account is terminated, we will retain some of your information (including email address, geo-location, and transaction history) as needed to comply with our legal and regulatory obligations, resolve disputes, conclude any activities related to cancellation of an account, investigate or prevent fraud and other inappropriate activity, to enforce our agreements, and for other business reasons. After a period of time, your data may be anonymised and aggregated, and then may be held by us as long as is necessary for us to provide access to the Services effectively, but our use of the anonymised data will be solely for analytic purposes. 4. SECURITY LAWYERPP has taken strong measures to protect the security of your personal information and to ensure that your choices for its intended use are honoured. We take strong precautions to protect your data from loss, misuse, unauthorised access or disclosure, alteration, or destruction. The information we collect is securely stored within our databases, and we use standard, industry-wide, commercially reasonable security practices such as encryption, firewalls and Secure Socket Layers (“SSL”) for protecting your information. However, as effective as encryption technology may be, kindly note that any information you transmit to LAWYERPP is done at your own risk, and we recommend that you take necessary steps to ensure that information you supply to us is not intercepted while being transmitted to us over the internet or wireless communication. We strongly recommend that you do not disclose your password to anyone. Your personal information is never shared outside LAWYERPP without your permission except under conditions explained above. Inside LAWYERPP, data is stored in password-controlled servers with limited access. Your information may be stored and processed in Nigeria or any other country where LAWYERPP, its subsidiaries, affiliates or agents are located. You also have a significant role in protecting your information. No one can see or edit your personal information without knowing your username and password, so do not share these with others. 5. CHANGES TO THE PRIVACY POLICY From time to time, we may update this Privacy Policy to reflect changes to our information practices. Any changes will be effective immediately upon the posting of the revised Privacy Policy. If we make any material changes, we will notify you by email (sent to your registered email address) or by means of a notice on the Services prior to the change becoming effective. We encourage you to periodically review this page for the latest information on our privacy practices. 6. CONSENT If you choose not to register or provide personal information, you may still be able to use some of LAWYERPP’s Services, but you will not be able to access areas that require registration. If you decide to register, you may be able to select the kinds of information you want to receive from us by subscribing to various services and products. If you do not want us to communicate with you in respect of other offers regarding LAWYERPP’s solutions, products, programs or services by email, postal mail, or telephone, you may select the option in the appropriate feature stating that you do not wish to receive marketing messages from LAWYERPP. LAWYERPP may occasionally allow other organisations or third parties to offer our registered customers information about their products and services, via email or postal mail. If you do not want to receive these offers, you may select the option stating that you do not wish to receive marketing materials from third parties in the appropriate feature or unsubscribe from receiving such information in the appropriate section of the marketing email. 7. NOTICE We will ask you when we need information that personally identifies you (“Personal Information”) or allows us to contact you. Generally, this information is requested when you register on LAWYERPP. We use your Personal Information for four primary purposes: (a) To make the Solution easier for you to use by not having to enter information more than once; (b) To help you quickly find software, services or information; (c) To help us create content most relevant to you; and (d) To alert you to product upgrades, special offers, updated information and other new services from LAWYERPP. 8. ACCESS We will provide you with the means to ensure that your Personal Information is correct and current. You may review and update this information at any time in the Settings menu. There, you can view and edit personal information you have already given us. 9. ENFORCEMENT If for some reason you believe LAWYERPP has not adhered to this Privacy Policy, please notify us via complaints@www.lawyerpp.com and we will do our best to determine and correct the problem promptly. Be certain the words “Privacy Policy” are in the subject line. If action is not taken on the request, LAWYERPP shall inform you without delay. 10. ELECTRONIC PRODUCT REGISTRATION When you subscribe to a new product, we may ask you to register your purchase electronically. When you do, we will merge your registration information with any information you have already left with us. If you have not previously registered with us, we may create a personal profile for you from your product registration information. You can always review, update or delete this information in the Settings menu. 11. CONTACT US If you have any questions about this Privacy Policy, please contact us via info@www.lawyerpp.com. Physical mails may be sent to 55, Gbangbala Street, Ikate, Lekki Phase 1, Lagos, Nigeria. You may also use any of our publicly available customer care numbers.",
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Color(0xFF1D1D1D)
+                )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }

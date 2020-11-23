@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:lawyerpp/ui/register/client/terms_and_condition.dart';
 import 'package:lawyerpp/utils/constant.dart';
 import 'package:lawyerpp/utils/sizeConfig.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class PanicAlert extends StatefulWidget {
-  static const String id = 'panicAlert';
+
+  static const String id = 'panicAlert_screen';
+
   @override
   _PanicAlertState createState() => _PanicAlertState();
 }
@@ -17,16 +18,16 @@ class _PanicAlertState extends State<PanicAlert> {
   final _formKey = GlobalKey<FormState>();
 
   /// A [TextEditingController] to control the input text for the user's last name
-  TextEditingController _nextKinController = new TextEditingController();
+  TextEditingController _nextKinController = TextEditingController();
 
   /// A [TextEditingController] to control the input text for the user's email
-  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   /// A [TextEditingController] to control the input text for the user's phone
-  TextEditingController _phoneNumberController = new TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
 
   /// A [TextEditingController] to control the input text for the user's password
-  TextEditingController _relationshipController = new TextEditingController();
+  TextEditingController _relationshipController = TextEditingController();
 
 
   @override
@@ -38,7 +39,6 @@ class _PanicAlertState extends State<PanicAlert> {
         child: SingleChildScrollView(
           child: Container(
             width: SizeConfig.screenWidth,
-//            height: SizeConfig.screenHeight,
             child: Column(
               children: <Widget>[
                 Container(
@@ -49,67 +49,56 @@ class _PanicAlertState extends State<PanicAlert> {
                     children: <Widget>[
                       Container(
                         alignment: Alignment.topRight,
-//                      width: 15,
-//                      height: 15,
                         child: GestureDetector(
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
                           child: Icon(
-                            FontAwesomeIcons.times,
-                            // size: 16,
+                            Icons.close,
                             color: Color(0xFF999999),
                           ),
                         ),
                       ),
-
                       SizedBox(height: 54,),
-
                       Container(
                         alignment: Alignment.center,
                         child: Text(
                           'Panic Alerts',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            //fontFamily: ,
+                            fontFamily: 'Raleway',
                             fontSize:17.75 ,
                             fontWeight:FontWeight.w500 ,
                             color: Color(0xFF1D1D1D,),
                           ),
                         ),
                       ),
-
                       SizedBox(height: 11.61,),
-
                       Container(
                         alignment: Alignment.center,
+                        width: SizeConfig.screenWidth,
                         child: Text(
-                          "Please provide details of your Next of Kin who\nwill receive Panic Alerts sent by you. You\n"
-                              "can always add more Next of Kin or change these\ndetails later in the Settings Menu.",
+                          "Please provide details of your Next of Kin who\nwill receive Panic Alerts sent by you. You can always add more Next of Kin or change these\ndetails later in the Settings Menu.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            //fontFamily: ,
+                            fontFamily: 'Raleway',
                             fontSize:14,
                             fontWeight:FontWeight.w400 ,
                             color: Color(0xFF1C2D55,),
                           ),
                         ),
                       ),
-
                       SizedBox(height: 34.94,),
-
                       _buildPanicAlert(),
-
                       SizedBox(height: 45,),
-
-                      //Submit button
                       GestureDetector(
                         onTap: (){
-
+                          Navigator.pushNamed(context, TermsAndC.id);
                         },
                         child: Container(
                           width: SizeConfig.screenWidth,
                           height: 45,
                           decoration: BoxDecoration(
-                            //inActive
                             color: Color(0xFF1A2C56),
                             borderRadius: BorderRadius.all(Radius.circular(4)),
                           ),
@@ -120,23 +109,20 @@ class _PanicAlertState extends State<PanicAlert> {
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14,
                                 color: Colors.white,
-                                //fontFamily: ,
+                                fontFamily: 'Raleway',
                               ),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(height: 23,),
-
-                      //Skip button
                       GestureDetector(
                         onTap: (){
-
+                          Navigator.pushNamed(context, TermsAndC.id);
                         },
                         child: Container(
                           width: SizeConfig.screenWidth,
                           height: 45,
-
                           decoration: BoxDecoration(
                             border:Border.all(
                               color:kButtonActive,
@@ -150,13 +136,12 @@ class _PanicAlertState extends State<PanicAlert> {
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14,
                                 color: kButtonActive,
-                                //fontFamily: ,
+                                fontFamily: 'Raleway',
                               ),
                             ),
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 )
@@ -168,21 +153,20 @@ class _PanicAlertState extends State<PanicAlert> {
     );
   }
 
-  /// A function that builds the sign up widget
+  /// A function that builds the panic alert details widget
   Widget _buildPanicAlert() {
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          //Next of kin
           Text(
             'Next of kin',
             style:TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
               color: Colors.black,
-              //fontFamily: ,
+              fontFamily: 'Raleway',
             ),
           ),
           SizedBox(height: 6,),
@@ -200,30 +184,30 @@ class _PanicAlertState extends State<PanicAlert> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
-                //fontFamily: ,
+                fontFamily: 'Raleway',
                 color: Color(0xFF1C2D55),
               ),
               decoration:kFieldDecoration.copyWith(
-                  hintText: 'E.g. Jackie Onyi Ade-Musa',
-                  hintStyle:TextStyle(
-                    color:Color(0xFF999999),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  )
+                hintText: 'E.g. Jackie Onyi Ade-Musa',
+                hintStyle:TextStyle(
+                  color:Color(0xFF999999),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'Raleway',
+                )
               ),
             ),
           ),
 
           SizedBox(height: 25,),
 
-          //Phone number
           Text(
             'Phone number',
             style:TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
               color: Colors.black,
-              //fontFamily: ,
+              fontFamily: 'Raleway',
             ),
           ),
           SizedBox(height: 6,),
@@ -234,14 +218,14 @@ class _PanicAlertState extends State<PanicAlert> {
               keyboardType: TextInputType.phone,
               validator: (value){
                 if(value.isEmpty){
-                  return 'Enter your first name';
+                  return 'Enter your phone numnber';
                 }
                 return null;
               },
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                //fontFamily: ,
+                fontFamily: 'Raleway',
                 color: Color(0xFF1C2D55),
               ),
               decoration:kFieldDecoration.copyWith(
@@ -250,6 +234,7 @@ class _PanicAlertState extends State<PanicAlert> {
                   color:Color(0xFF999999),
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
+                  fontFamily: 'Raleway',
                 ),
                 suffix: GestureDetector(
                   onTap: (){},
@@ -272,7 +257,7 @@ class _PanicAlertState extends State<PanicAlert> {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               color: Colors.black,
-              //fontFamily: ,
+              fontFamily: 'Raleway',
             ),
           ),
           SizedBox(height: 6,),
@@ -290,7 +275,7 @@ class _PanicAlertState extends State<PanicAlert> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                //fontFamily: ,
+                fontFamily: 'Raleway',
                 color: Color(0xFF1C2D55),
               ),
               decoration:kFieldDecoration.copyWith(
@@ -299,6 +284,7 @@ class _PanicAlertState extends State<PanicAlert> {
                   color:Color(0xFF999999),
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
+                  fontFamily: 'Raleway',
                 ),
                   suffix: GestureDetector(
                     onTap: (){},
@@ -321,7 +307,7 @@ class _PanicAlertState extends State<PanicAlert> {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               color: Colors.black,
-              //fontFamily: ,
+              fontFamily: 'Raleway',
             ),
           ),
           SizedBox(height: 6,),
@@ -339,7 +325,7 @@ class _PanicAlertState extends State<PanicAlert> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                //fontFamily: ,
+                fontFamily: 'Raleway',
                 color: Color(0xFF1C2D55),
               ),
               decoration:kFieldDecoration.copyWith(
@@ -348,6 +334,7 @@ class _PanicAlertState extends State<PanicAlert> {
                   color:Color(0xFF999999),
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
+                  fontFamily: 'Raleway',
                 ),
                   suffix: GestureDetector(
                     onTap: (){},
@@ -364,4 +351,5 @@ class _PanicAlertState extends State<PanicAlert> {
       ),
     );
   }
+
 }

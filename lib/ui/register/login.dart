@@ -1,13 +1,13 @@
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lawyerpp/utils/sizeConfig.dart';
 import 'package:lawyerpp/utils/constant.dart';
 import 'package:lawyerpp/ui/register/signup.dart';
 
-
 class Login extends StatefulWidget {
-  static const String id = 'login';
+
+  static const String id = 'login_screen';
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -33,10 +33,10 @@ class _LoginState extends State<Login> {
   final FocusNode _myFocusNodeName = FocusNode();
 
   /// A [TextEditingController] to control the input text for the user's email
-  TextEditingController _loginEmailController = new TextEditingController();
+  TextEditingController _loginEmailController = TextEditingController();
 
   /// A [TextEditingController] to control the input text for the user's password
-  TextEditingController _loginPasswordController = new TextEditingController();
+  TextEditingController _loginPasswordController = TextEditingController();
 
   /// A string variable to hold the user's email
   String _email;
@@ -47,250 +47,210 @@ class _LoginState extends State<Login> {
   /// A boolean variable to hold whether the password should be shown or hidden
   bool _obscureTextLogin = true;
 
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       backgroundColor: kBackgroundColor,
-        body: SafeArea(
+        body: Container(
+          padding: EdgeInsets.only(top: 66, left: 15, right: 15),
           child: SingleChildScrollView(
             child: Container(
-              child: Stack(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Center(
-                    child: Column(
+                  Image.asset(
+                    'assets/lawyerpp_logo.png',
+                    width: 33.28,
+                    height: 35,
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(height: 32,),
+                  Text(
+                      legal,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xFF1D1D1D),
+                          fontFamily: 'Raleway'
+                      )
+                  ),
+                  SizedBox(height: 42,),
+                  Container(
+                    width: SizeConfig.screenWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        //parent container with maximum width size the children is not meant to pass
-                        Container(
-                          width: SizeConfig.screenWidth - 30,
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset('assets/lawyerpp_logo.png',
-                                width: 33.28,
-                                height: 35,
-                              ),
-
-                              SizedBox(height: 32,),
-
-
-                              Text(legal,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-
-                                  )
-                              ),
-
-                              SizedBox(height: 42,),
-
-                              // use a container to wrap the two button[google and linkedln] in a stack
-                              Container(
-                                width: SizeConfig.screenWidth,
-                                child: Stack(
-                                  children: <Widget>[
-                                    //google button row
-                                    Row(
-                                      children: <Widget>[
-                                        //button for google
-                                        GestureDetector(
-                                          onTap: () {},
-                                          child: Container(
-                                            width: SizeConfig.screenWidth / 2.4,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),
-                                            ),
-                                            child: Center(
-                                              child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment
-                                                    .start,
-                                                mainAxisAlignment: MainAxisAlignment
-                                                    .center,
-                                                children: <Widget>[
-                                                  Image.asset(
-                                                    'assets/icons/google-icon.png',
-                                                    width: 14.23,
-                                                    height: 14.56,
-                                                  ),
-                                                  SizedBox(width: 6.78,),
-                                                  Text(
-                                                    'Google',
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .w600,
-                                                      fontSize: 13.25,
-                                                      //fontFamily: ,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                    //linkedln button row
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        //button for linkedln
-                                        GestureDetector(
-                                          onTap: () {},
-                                          child: Container(
-                                            width: SizeConfig.screenWidth / 2.4,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFF006699),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),
-                                            ),
-                                            child: Center(
-                                              child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment
-                                                    .start,
-                                                mainAxisAlignment: MainAxisAlignment
-                                                    .center,
-                                                children: <Widget>[
-                                                  Image.asset(
-                                                    'assets/icons/linkedln.png',
-                                                    width: 14.23,
-                                                    height: 14.56,
-                                                  ),
-                                                  SizedBox(width: 6.78,),
-                                                  Text(
-                                                    'Linkedln',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .w600,
-                                                      fontSize: 13.25,
-                                                      color: Colors.white,
-                                                      //fontFamily: ,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-
-                              // this is for the divider line and text
-                              Container(
-                                child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                          child: Divider(
-                                            height: 45,
-                                            thickness: 1,
-                                          )
-                                      ),
-
-                                      Text(
-                                        "Or",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          //fontFamily: ,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-
-                                      Expanded(
-                                          child: Divider(
-                                            height: 45,
-                                            thickness: 1,
-                                          )
-                                      ),
-                                    ]
-                                ),
-                              ),
-
-                              SizedBox(height: 22,),
-
-                              //forms function
-                              _buildSignUp(),
-
-                              SizedBox(height: 45,),
-
-                              //Sign in button
-                              GestureDetector(
-                                onTap: (){
-
-                                },
-                                child: Container(
-                                  width: SizeConfig.screenWidth,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    //Active
-                                    color: Color(0xFF1A2C56),
-                                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: SizeConfig.screenWidth / 2.4,
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                            ),
+                            child: Center(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/icons/google-icon.png',
+                                    width: 14.23,
+                                    height: 14.56,
+                                    fit: BoxFit.contain,
                                   ),
-                                  child:Center(
-                                    child: Text(
-                                      'Sign in',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        //fontFamily: ,
-                                      ),
+                                  SizedBox(width: 6.78),
+                                  Text(
+                                    'Google',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13.25,
+                                      fontFamily: 'Raleway',
+                                      color: Color(0xFF999999),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-
-
-                              SizedBox(height: 23,),
-                              // alternative sign in link
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, SignUp.id);
-                                },
-                                child: Container(
-                                  width: SizeConfig.screenWidth - 40,
-                                  child: RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(
-                                      text: "Don't have an account?",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                        //fontFamily: "Regular",
-                                        color:Color(0xFF999999),
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: 'Sign Up',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            //fontFamily: "Regular",
-                                            color: Color(0xFF1A2C56),
-                                            decoration: TextDecoration.underline,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 82,),
-                            ],
+                            ),
                           ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: SizeConfig.screenWidth / 2.4,
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF006699),
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(4)),
+                            ),
+                            child: Center(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/icons/linkedln.png',
+                                    width: 14.23,
+                                    height: 14.56,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(width: 6.78),
+                                  Text(
+                                    'Linkedln',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13.25,
+                                      fontFamily: 'Raleway',
+                                      color: Colors.white,
+                                      //fontFamily: ,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Container(
+                    width: SizeConfig.screenWidth,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: (SizeConfig.screenWidth / 2) - 22,
+                          height: 1,
+                          color: Colors.black.withOpacity(0.1),
+                        ),
+                        Container(
+                          width: 14,
+                          child: Text(
+                            "Or",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF999999)
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: (SizeConfig.screenWidth / 2) - 22,
+                          height: 1,
+                          color: Colors.black.withOpacity(0.1),
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  SizedBox(height: 16),
+                  _buildSignIn(),
+                  SizedBox(height: 45,),
+                  GestureDetector(
+                    onTap: (){
+
+                    },
+                    child: Container(
+                      width: SizeConfig.screenWidth,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        //Active
+                        color: Color(0xFF1A2C56),
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                      ),
+                      child:Center(
+                        child: Text(
+                          'Sign in',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: Colors.white,
+                            fontFamily: "Raleway",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 23,),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, SignUp.id);
+                    },
+                    child: Container(
+                      width: SizeConfig.screenWidth - 40,
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: "Don't have an account?",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Raleway",
+                            color:Color(0xFF999999),
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: ' Sign Up',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway",
+                                color: Color(0xFF1A2C56),
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 82,),
                 ],
               ),
             ),
@@ -301,21 +261,20 @@ class _LoginState extends State<Login> {
 
 
   /// A function that builds the sign up widget
-  Widget _buildSignUp() {
+  Widget _buildSignIn() {
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: 6,),
-          //Email
           Text(
             'Email Address',
             style:TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
               color: Colors.black,
-              //fontFamily: ,
+              fontFamily: 'Raleway',
             ),
           ),
           SizedBox(height: 6,),
@@ -331,9 +290,9 @@ class _LoginState extends State<Login> {
                 return null;
               },
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
-                //fontFamily: ,
+                fontFamily: 'Raleway',
                 color: Color(0xFF1C2D55),
               ),
               decoration:kFieldDecoration.copyWith(
@@ -341,51 +300,38 @@ class _LoginState extends State<Login> {
                   hintStyle:TextStyle(
                     color:Color(0xFF8B9EB4),
                     fontSize: 14,
+                    fontFamily: 'Raleway',
                     fontWeight: FontWeight.w400,
                   )
               ),
             ),
           ),
-
           SizedBox(height: 26,),
-
-          //password
-
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Password',
-                    style:TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Colors.black,
-                      //fontFamily: ,
-                    ),
-                  ),
-                ],
+              Text(
+                'Password',
+                style:TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.black,
+                  fontFamily: 'Raleway',
+                ),
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-               // crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: (){},
-                    child: Text(
-                      'Forgot password',
-                      style: TextStyle(
-                       // fontFamily: ,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13.25,
-                        color: Color(0xFF999999),
-                      ),
-                    ),
-                  )
-                ],
+              GestureDetector(
+                onTap: (){},
+                child: Text(
+                  'Forgot password',
+                  style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13.25,
+                    decoration: TextDecoration.underline,
+                    color: Color(0xFF999999),
+                  ),
+                ),
               )
             ],
           ),
@@ -403,18 +349,12 @@ class _LoginState extends State<Login> {
                 return null;
               },
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
-                //fontFamily: ,
+                fontFamily: 'Raleway',
                 color: Color(0xFF1C2D55),
               ),
               decoration:kFieldDecoration.copyWith(
-                //hintText: 'Password',
-                  hintStyle:TextStyle(
-                    color:Color(0xFF8B9EB4),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
                   suffixIcon: GestureDetector(
                     onTap: _toggleLogin,
                     child: Icon(
@@ -425,11 +365,8 @@ class _LoginState extends State<Login> {
                     ),
                   )
               ),
-
-
             ),
           ),
-
         ],
       ),
     );
