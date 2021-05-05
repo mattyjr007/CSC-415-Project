@@ -17,6 +17,9 @@ $matric = $_SESSION['user-matric'];
 
 $name = "Natasha Laurell";
 $profilepic = null;
+$email = "";
+$department= "";
+$course = "";
 
 $usr = "SELECT * 
         FROM     `dbnh41dWFL`.`users`
@@ -28,10 +31,15 @@ if ($result = mysqli_query($conn,$usr)) {
     $usr_row = mysqli_fetch_array($result);
 
     $name = $usr_row['student_name'];
+    $email = $usr_row['student_email'];
+    $department = $usr_row['student_department'];
+    $course = $usr_row['student_course_name'];
     $profilepic = $usr_row['student_img_url'];
     
   //  echo $profilepic;
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -58,24 +66,24 @@ if ($result = mysqli_query($conn,$usr)) {
             <ul>
                 <li><a href="./">home</a></li>
                 <li class="active"><a href="./">profile</a></li>
-                <li><a href="./">logout</a></li>
-                <li><a href="./"><img src="/imgs/profile.png" alt="profile"></a></li>
+                <li><a href="./login.php">logout</a></li>
+                <li><a href="./"><img src=<?php echo $profilepic ?> alt="profile"></a></li>
             </ul>
         </nav>
         <section class="p415-profile-upperheader">
             <p>Profile</p>
-            <p id="p415-user-matric">160805009</p>
+            <p id="p415-user-matric"><?php echo $matric ?></p>
             <hr />
         </section>
 
         <section class="p415-profile-mid-section">
             <section class="p415-profile-details">
-                <img src="./imgs/profile.png" alt="profile" />
+                <img src=<?php echo $profilepic ?> alt="profile" />
                 <hr>
-                <h1 id="p415-username">Natasha Laurel</h1>
-                <p id="p415-email">mathiasjr007@gmail.com</p>
-                <p id="p415-course">Computer Sciences</p>
-                <p id="p415-course-code">CSC 415</p>
+                <h1 id="p415-username"><?php echo $name ?></h1>
+                <p id="p415-email"><?php echo $email ?></p>
+                <p id="p415-course"><?php echo $department ?></p>
+                <p id="p415-course-code"><?php echo $course ?></p>
             </section>
 
             <section class="p415-profile-form-section">

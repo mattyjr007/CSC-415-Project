@@ -10,6 +10,12 @@ if ( !isset($_SESSION['user-matric'])) {
     header("Location: login.php");
 }
 
+if ( isset( $_SESSION['sucess_app'])) {
+   echo $_SESSION['sucess_app'];
+
+   unset($_SESSION['sucess_app']);
+}
+
 include 'connect.php';
 
 $matric = $_SESSION['user-matric'];
@@ -34,6 +40,8 @@ if ($result = mysqli_query($conn,$usr)) {
 
 //$dte = "";
 //$dte =  $_REQUEST['dte'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +82,7 @@ if ($result = mysqli_query($conn,$usr)) {
 
         <section class="p415-mid-section">
             <p>Book An Appointment for Supervision Today!</p>
-            <img src="./imgs/home-background.png" alt="" />
+            <img src="./imgs/home-background.png" alt=""  />
         </section>
 
         <section class="p415-bottom-section">
@@ -86,6 +94,7 @@ if ($result = mysqli_query($conn,$usr)) {
                     <?php 
 
                     $select_items = "";
+                    $slot_left = 0;
                     
                     $query1 = "SELECT * FROM `dbnh41dWFL`.`session`
                                 WHERE status= 'active' ";
@@ -93,6 +102,8 @@ if ($result = mysqli_query($conn,$usr)) {
                     if ($resullt = mysqli_query($conn,$query1)) {
                     
                         $active_session = mysqli_fetch_array($resullt);
+
+                        $_SESSION['active_sess'] = $active_session['session'];
 
                     //    echo $active_session['session'];
                        // while ( $row = mysqli_fetch_array($resullt)) {
@@ -107,7 +118,8 @@ if ($result = mysqli_query($conn,$usr)) {
 
                             while ( $row2 = mysqli_fetch_array($resullt2)) {       
                                 $select_items = $row2['available_DOW'].' '.date('F, Y', strtotime($row2['start_date'])).' '.date('h:ia', strtotime($row2['start_time'])).'-'.date('h:ia', strtotime($row2['end_time']));
-                                echo   '<a href="#selected_time">'.$select_items.'</a>' ;
+                                $slot_left = $row2['slot_left'];
+                                echo   '<a href="#selected_time" data-value='.$slot_left.'>'.$select_items.'</a>' ;
                             }  
                             
                 
@@ -122,7 +134,7 @@ if ($result = mysqli_query($conn,$usr)) {
             </div>
             <div class="p415-slot-section">
                 <p>
-                    <span id="slots">2</span>
+                    <span id="slots">0</span>
                     <span id="slots-suffix">Slot left</span>
                 </p>
             </div>
@@ -133,7 +145,7 @@ if ($result = mysqli_query($conn,$usr)) {
             <textarea cols="5" rows="8" id="leave-a-message" placeholder="Leave a message..."
                 name="booking-message"></textarea>
 
-            <input type="submit" value="BOOK" />
+            <input type="submit" id="booked" value="BOOK" />
         </section>
 
     </main>
@@ -142,6 +154,41 @@ if ($result = mysqli_query($conn,$usr)) {
         <p>Coyright <span id="copy-year">2021</span> &copy; appointmentunilag.com All rights reserved.</p>
     </footer>
     <script src='./js/main.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    $( "#booked" ).on( "click", function() {
+
+
+        var  appointment_Day = $.trim($('.dropbtn').text());
+
+        var slotLeft = parseInt($.trim($('#slots').text()));
+
+        var msg = $.trim($('#leave-a-message').val());
+
+
+        $.ajax({
+            url: 'saveappointment.php',
+            type: 'POST',
+            data: { appointment_Day: appointment_Day,
+                    slotLeft:slotLeft,
+                    msg: msg
+                    
+                    },
+            success: function(response){
+                console.log(response);
+                // window.location = 'saveappointment.php';
+                window.location.href = 'index.php';
+                //$("#div").html(response);
+            }
+            });
+
+
+        });
+
+
+    </script>
 
  
 </body>
